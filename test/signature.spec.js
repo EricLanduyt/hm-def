@@ -54,14 +54,14 @@ describe('Parameter types', () => {
   });
 
   it('should resolve user types', () => {
-    const Widget = $.NullaryType('Widget', 'http://example.com/Widget', R.T);
+    const Widget = $.NullaryType('Widget')('http://example.com/Widget')(R.T);
     const env = $.env.concat([Widget]);
     const { types } = resolve([], env, 'foo :: Widget -> String');
     assertDeepEqual(types, [Widget, $.String]);
   });
 
   it('should resolve namespaced user types', () => {
-    const Widget = $.NullaryType('x/y/z/Widget', 'http://example.com/Widget', R.T);
+    const Widget = $.NullaryType('x/y/z/Widget')('http://example.com/Widget')(R.T);
     const env = $.env.concat([Widget]);
     const { types } = resolve([], env, 'foo :: Widget -> String');
     assertDeepEqual(types, [Widget, $.String]);
@@ -95,12 +95,11 @@ describe('Parameter types', () => {
   });
 
   it('should resolve maybes', () => {
-    const Maybe = $.UnaryType(
-      'my-package/Maybe',
-      'http://example.com/my-package#Maybe',
-      R.T,
-      R.always([]),
-    );
+    const Maybe = $.UnaryType
+      ('my-package/Maybe')
+      ('http://example.com/my-package#Maybe')
+      (R.T)
+      (R.always([]));
     const env = $.env.concat([
       Maybe($.Unknown),
     ]);
@@ -109,18 +108,17 @@ describe('Parameter types', () => {
   });
 
   it('should resolve eithers', () => {
-    const Either = $.BinaryType(
-      'my-package/Either',
-      'http://example.com/my-package#Either',
-      R.T,
-      R.always([]),
-      R.always([]),
-    );
+    const Either = $.BinaryType
+      ('my-package/Either')
+      ('http://example.com/my-package#Either')
+      (R.T)
+      (R.always([]))
+      (R.always([]));
     const env = $.env.concat([
-      Either($.Unknown, $.Unknown),
+      Either($.Unknown)($.Unknown),
     ]);
     const { types } = resolve([], env, 'foo :: Either String Number -> String');
-    assertDeepEqual(types, [Either($.String, $.Number), $.String]);
+    assertDeepEqual(types, [Either($.String)($.Number), $.String]);
   });
 
   it('should resolve thunks', () => {

@@ -112,20 +112,19 @@ const typeEq = R.propEq('type');
 const hasChildren = R.compose(R.not, R.isEmpty, R.prop('children'));
 
 //  :: Type -> (Type -> Type)
-const fromUnaryType = t => $.UnaryType(
-  t.name,
-  t.url,
-  t._test, // eslint-disable-line no-underscore-dangle
-  t.types.$1.extractor
-);
+const fromUnaryType = t => $.UnaryType
+  (t.name)
+  (t.url)
+  (t._test) // eslint-disable-line no-underscore-dangle
+  (t.types.$1.extractor);
+
 //  :: Type -> (Type -> Type -> Type)
-const fromBinaryType = t => $.BinaryType(
-  t.name,
-  t.url,
-  t._test, // eslint-disable-line no-underscore-dangle
-  t.types.$1.extractor,
-  t.types.$2.extractor
-);
+const fromBinaryType = t => $.BinaryType
+  (t.name)
+  (t.url)
+  (t._test) // eslint-disable-line no-underscore-dangle
+  (t.types.$1.extractor)
+  (t.types.$2.extractor);
 
 // :: (Type, [Type]) -> ()
 const checkTypeArity = (type, argTypes) => {
@@ -149,18 +148,18 @@ const constructType = uncurry2(argTypes =>
       checkTypeArity(t, argTypes);
       switch (t.type) {
         case 'BINARY':
-          return fromBinaryType(t)(argTypes[0], argTypes[1]);
+          return fromBinaryType(t)(argTypes[0])(argTypes[1]);
         case 'UNARY':
           return fromUnaryType(t)(argTypes[0]);
         default: {
           throw new TypeError(
             `Type ${t.name} should be recreated with Types: ${R.map(R.prop('name'), argTypes)} ` +
-            `but it haven't got a proper function recreator for type ${t.type}.`
+            `but it haven't got a proper function recreator for type ${t.type}.`,
           );
         }
       }
-    }
-  )
+    },
+  ),
 );
 
 // :: SignatureEntry -> Reader TypeMap Type
@@ -178,7 +177,7 @@ const lookupType = entry => Reader((typeMap) => {
 });
 
 // Helper Type to wipe out thunks
-const Thunk = $.NullaryType('hm-def/Thunk', '', R.F);
+const Thunk = $.NullaryType('hm-def/Thunk')('')(R.F);
 
 // :: SignatureEntry -> Reader TypeMap Type
 const convertTypeConstructor = entry => R.ifElse(

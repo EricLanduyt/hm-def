@@ -21,6 +21,9 @@ module.exports = {
   },
 
   rules: {
+    'func-call-spacing': ['off'],
+    'no-spaced-func': ['off'],
+    'no-unexpected-multiline': ['off'],
     'no-underscore-dangle': ['error', {
       allow: ["__"], /* Ramda’s R.__ */
     }]
