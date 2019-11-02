@@ -54,14 +54,14 @@ describe('Parameter types', () => {
   });
 
   it('should resolve user types', () => {
-    const Widget = $.NullaryType('Widget')('http://example.com/Widget')(R.T);
+    const Widget = $.NullaryType('Widget')('http://example.com/Widget')([])(R.T);
     const env = $.env.concat([Widget]);
     const { types } = resolve([], env, 'foo :: Widget -> String');
     assertDeepEqual(types, [Widget, $.String]);
   });
 
   it('should resolve namespaced user types', () => {
-    const Widget = $.NullaryType('x/y/z/Widget')('http://example.com/Widget')(R.T);
+    const Widget = $.NullaryType('x/y/z/Widget')('http://example.com/Widget')([])(R.T);
     const env = $.env.concat([Widget]);
     const { types } = resolve([], env, 'foo :: Widget -> String');
     assertDeepEqual(types, [Widget, $.String]);
@@ -98,6 +98,7 @@ describe('Parameter types', () => {
     const Maybe = $.UnaryType
       ('my-package/Maybe')
       ('http://example.com/my-package#Maybe')
+      ([])
       (R.T)
       (R.always([]));
     const env = $.env.concat([
@@ -111,6 +112,7 @@ describe('Parameter types', () => {
     const Either = $.BinaryType
       ('my-package/Either')
       ('http://example.com/my-package#Either')
+      ([])
       (R.T)
       (R.always([]))
       (R.always([]));

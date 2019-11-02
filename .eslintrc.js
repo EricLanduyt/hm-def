@@ -22,6 +22,7 @@ module.exports = {
 
   rules: {
     'func-call-spacing': ['off'],
+    'max-len': ['off'],
     'no-spaced-func': ['off'],
     'no-unexpected-multiline': ['off'],
     'no-underscore-dangle': ['error', {

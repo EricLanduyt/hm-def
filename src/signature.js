@@ -115,16 +115,18 @@ const hasChildren = R.compose(R.not, R.isEmpty, R.prop('children'));
 const fromUnaryType = t => $.UnaryType
   (t.name)
   (t.url)
+  (t.supertypes)
   (t._test) // eslint-disable-line no-underscore-dangle
-  (t.types.$1.extractor);
+  (t.extractors.$1);
 
 //  :: Type -> (Type -> Type -> Type)
 const fromBinaryType = t => $.BinaryType
   (t.name)
   (t.url)
+  (t.supertypes)
   (t._test) // eslint-disable-line no-underscore-dangle
-  (t.types.$1.extractor)
-  (t.types.$2.extractor);
+  (t.extractors.$1)
+  (t.extractors.$2);
 
 // :: (Type, [Type]) -> ()
 const checkTypeArity = (type, argTypes) => {
@@ -177,7 +179,7 @@ const lookupType = entry => Reader((typeMap) => {
 });
 
 // Helper Type to wipe out thunks
-const Thunk = $.NullaryType('hm-def/Thunk')('')(R.F);
+const Thunk = $.NullaryType('hm-def/Thunk')('')([])(R.F);
 
 // :: SignatureEntry -> Reader TypeMap Type
 const convertTypeConstructor = entry => R.ifElse(
