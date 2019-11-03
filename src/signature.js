@@ -116,7 +116,7 @@ const fromUnaryType = t => $.UnaryType
   (t.name)
   (t.url)
   (t.supertypes)
-  (t._test) // eslint-disable-line no-underscore-dangle
+  (t._test ([])) // eslint-disable-line no-underscore-dangle
   (t.extractors.$1);
 
 //  :: Type -> (Type -> Type -> Type)
@@ -124,7 +124,7 @@ const fromBinaryType = t => $.BinaryType
   (t.name)
   (t.url)
   (t.supertypes)
-  (t._test) // eslint-disable-line no-underscore-dangle
+  (t._test ([])) // eslint-disable-line no-underscore-dangle
   (t.extractors.$1)
   (t.extractors.$2);
 
